@@ -1,11 +1,12 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:equatable/equatable.dart';
 
-import 'package:flutter_chat/utils/utils.dart';
-import 'package:flutter_chat/observer.dart';
+import 'observer.dart';
+import 'screens/local_authentication/local_authentication.dart';
+import 'utils/utils.dart';
 
 void main() async {
   Bloc.observer = MyBlocObserver();
@@ -13,19 +14,6 @@ void main() async {
   runApp(
     MyApp(),
   );
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Chat',
-      theme: ChatTheme.theme,
-      home: ChatApp(),
-      initialRoute: ChatApp.route,
-      onGenerateRoute: ChatRouter.onGenerateRoute,
-    );
-  }
 }
 
 class ChatApp extends StatelessWidget {
@@ -43,19 +31,32 @@ class ChatApp extends StatelessWidget {
       ],
       child: BlocBuilder<UserStatusCubit, bool>(builder: (context, state) {
         if (state == null) return Scaffold(body: Container());
-        if (state) return AuthenticationScreen();
+        if (state) return AuthenticationPage();
         return CreateUserScreen();
       }),
     );
   }
+
+  void onSuccess(BuildContext context, dynamic state) {
+    if (state.status == FormzStatus.submissionSuccess) {
+      //Navigator.of(context).pushAndRemoveUntil(
+      // TODO [3] Push Home Screen if success.
+      // RouteGenerator.getRoute(RouteGenerator.home),
+      //(route) => false,
+      //);
+    }
+  }
 }
 
-void onSuccess(BuildContext context, dynamic state) {
-  if (state.status == FormzStatus.submissionSuccess) {
-    //Navigator.of(context).pushAndRemoveUntil(
-    // TODO Push Home Screen
-    // RouteGenerator.getRoute(RouteGenerator.home),
-    //(route) => false,
-    //);
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Chat',
+      theme: ChatTheme.theme,
+      home: ChatApp(),
+      initialRoute: ChatApp.route,
+      onGenerateRoute: ChatRouter.onGenerateRoute,
+    );
   }
 }
