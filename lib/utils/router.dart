@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../main.dart';
-import newMethod;
-
-String get newMethod => '../screens/local_authentication/local_authentication.dart';
+import '../screens/create_user/create_user.dart';
+import '../screens/local_authentication/local_authentication.dart';
 
 class ChatRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -14,6 +13,14 @@ class ChatRouter {
       case ChatApp.route:
         return MaterialPageRoute(
           builder: (_) => ChatApp(),
+        );
+      case AuthenticationPage.route:
+        return MaterialPageRoute(
+          builder: (_) => AuthenticationPage(),
+        );
+      case CreateUserPage.route:
+        return MaterialPageRoute(
+          builder: (_) => CreateUserPage(),
         );
       case AuthenticationPage.route:
         //if (args is String) {

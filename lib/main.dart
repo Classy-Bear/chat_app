@@ -6,6 +6,7 @@ import 'package:formz/formz.dart';
 
 import 'observer.dart';
 import 'screens/local_authentication/local_authentication.dart';
+import 'screens/create_user/create_user.dart';
 import 'utils/utils.dart';
 
 void main() async {
@@ -32,7 +33,7 @@ class ChatApp extends StatelessWidget {
       child: BlocBuilder<UserStatusCubit, bool>(builder: (context, state) {
         if (state == null) return Scaffold(body: Container());
         if (state) return AuthenticationPage();
-        return CreateUserScreen();
+        return CreateUserPage();
       }),
     );
   }
