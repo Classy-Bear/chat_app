@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:meta/meta.dart';
 
 import '../models/create_user_formz.dart';
 
@@ -39,7 +40,7 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
     CreateUserState state,
   ) async* {
     yield state.copyWith(status: FormzStatus.submissionInProgress);
-    if (event.name.trim().isNotEmpty) {
+    if (state.createUser.value.isNotEmpty) {
       yield state.copyWith(status: FormzStatus.submissionSuccess);
       // TODO [5] Save the user that has been created in the database.
     } else {

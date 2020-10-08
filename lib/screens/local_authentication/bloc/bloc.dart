@@ -31,7 +31,7 @@ class AuthenticationBloc
   ) async* {
     yield state.copyWith(status: FormzStatus.submissionInProgress);
     final isAuthCorrect = event.isBiometricsCorrect ?? false;
-    final code = event.code ?? '';
+    final code = state.code.value ?? '';
     // TODO [1] The auth code should not be aboslute.
     // TODO [2] Add the code to the database if is valid.
     if (isAuthCorrect || code == '0000') {

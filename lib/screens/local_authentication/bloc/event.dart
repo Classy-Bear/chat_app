@@ -9,13 +9,11 @@ abstract class AuthenticationEvent extends Equatable {
 
 class AuthenticationSubmitted extends AuthenticationEvent {
   final bool isBiometricsCorrect;
-  final String code;
 
-  const AuthenticationSubmitted({this.isBiometricsCorrect, this.code})
-      : assert((isBiometricsCorrect != null) != (code != null));
+  const AuthenticationSubmitted({this.isBiometricsCorrect});
 
   @override
-  List<Object> get props => [isBiometricsCorrect, code];
+  List<Object> get props => [isBiometricsCorrect];
 }
 
 class AuthenticationCodeChanged extends AuthenticationEvent {

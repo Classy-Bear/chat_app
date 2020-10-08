@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../create_user.dart';
+
 class CreateUserPage extends StatelessWidget {
   static const route = '/create_user';
   @override
@@ -21,7 +23,9 @@ class CreateUserPage extends StatelessWidget {
                   ButtonBar(
                     children: [
                       CreateUserRaisedButtonDW(
-                        onPressed: () {},
+                        onPressed: () => context.bloc<CreateUserBloc>().add(
+                              CreateUserSubmitted(),
+                            ),
                       ),
                     ],
                   ),
