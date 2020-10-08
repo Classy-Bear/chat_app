@@ -12,7 +12,7 @@ class ChatRouter {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case ChatApp.route:
+      case RootPage.route:
         return MaterialPageRoute(
           builder: (_) => ChatApp(),
         );
@@ -32,7 +32,7 @@ class ChatRouter {
         return MaterialPageRoute(
           builder: (_) => ChatPage(),
         );
-      case AuthenticationPage.route:
+      //case AuthenticationPage.route:
         //if (args is String) {
         //return MaterialPageRoute(
         //builder: (_) => SecondPage(
@@ -40,7 +40,7 @@ class ChatRouter {
         //),
         //);
         //}
-        return _errorRoute();
+        //return _errorRoute();
       default:
         return _errorRoute();
     }

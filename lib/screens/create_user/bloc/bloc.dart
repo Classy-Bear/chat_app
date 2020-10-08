@@ -4,6 +4,8 @@ import 'package:formz/formz.dart';
 
 import '../models/create_user_formz.dart';
 
+export 'user_cubit.dart';
+
 part 'event.dart';
 part 'state.dart';
 
