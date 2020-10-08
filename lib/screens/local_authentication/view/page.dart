@@ -2,8 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../widgets/widgets.dart';
 import '../bloc/bloc.dart';
-import '../models/biometrics_auth.dart';
+import '../models/models.dart';
+import 'widgets/widgets.dart';
 
 class AuthenticationPage extends StatefulWidget {
   static const route = '/auth';
