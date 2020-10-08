@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/screens/chat/chat.dart';
+import 'package:flutter_chat/screens/home/view/widgets/home_content.dart';
+import 'package:flutter_chat/widgets/widgets.dart';
+import '../home.dart';
+import 'widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
-	const static route = '/home';
+	static const route = '/home';
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +17,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CategorySelector(
-              onTap: (i) => context.bloc<TabIndexCubit>().changeIndex(i),
+              onTap: (i) => context.bloc<TabCubit>().change(i),
             )
           ],
         ),
@@ -25,17 +30,14 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Contacts(
-                  contacts: favorites,
-                  onTap: (user) => Navigator.push(
+                  contacts: ,
+                  onTap: (user) => Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => ChatScreen(
-                        sender: user,
-                      ),
-                    ),
+										ChatPage.route,
+										arguments: user,
                   ),
                 ),
-                HomeContentDW(lastMessages: lastMessages),
+                HomeContentDW(lastMessages: ),
               ],
             ),
           ),

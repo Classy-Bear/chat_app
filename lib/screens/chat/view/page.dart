@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/widgets/widgets.dart';
+import 'package:user_repository/user_repository.dart';
+
+import 'widgets/widgets.dart';
 
 class ChatPage extends StatelessWidget {
-	static const route = '/chat';
+  static const route = '/chat';
 
   final User receiver;
 
