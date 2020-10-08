@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../main.dart';
+import '../screens/chat/view/view.dart';
 import '../screens/create_user/create_user.dart';
 import '../screens/home/home.dart';
 import '../screens/local_authentication/local_authentication.dart';
@@ -26,6 +27,10 @@ class ChatRouter {
       case HomePage.route:
         return MaterialPageRoute(
           builder: (_) => HomePage(),
+        );
+      case ChatPage.route:
+        return MaterialPageRoute(
+          builder: (_) => ChatPage(),
         );
       case AuthenticationPage.route:
         //if (args is String) {

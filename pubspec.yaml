@@ -23,11 +23,15 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  # State managment
+  # For State managment
   flutter_bloc: ^6.0.6
   formz: ^0.3.1
   equatable: ^1.2.5
+  # Plugins
   local_auth: ^0.6.3+2
+  # Repositories
+  user_repository:
+    path: packages/user_repository
 
 dev_dependencies:
   flutter_test:
