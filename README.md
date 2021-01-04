@@ -1,16 +1,31 @@
-# flutter_chat
+# ChatApp
 
-A new Flutter project.
+A simple chat app. This project is under development.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Install dependencies.
+```bash
+flutter pub get
+```
+Run project
+$1 = Url of the REST API
+$2 = Url of the Socket API
+```bash
+flutter run --dart-define=API_URL=$1 --dart-define=SOCKET_URL=$2
+```
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<div style="text-align: center">
+    <table>
+        <tr>
+            <td style="text-align: center">
+                <img src="./images/photo_2021-01-04 00.28.07.jpeg" width="250"/>
+            </td>
+            <td style="text-align: center">
+                <img src="./images/photo_2021-01-04 00.28.17.jpeg" width="250"/>
+            </td>
+            <td style="text-align: center">
+                <img src="./images/photo_2021-01-04 00.28.17.jpeg" width="250"/>
+            </td>
+    </table>
+</div>

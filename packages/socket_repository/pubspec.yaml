@@ -1,0 +1,12 @@
+name: socket_repository
+description: Package which manages the socket domain.
+version: 1.0.0
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  http: ^0.12.2
+  equatable: ^1.2.5
+  meta: ^1.1.8
+  socket_io_client: ^0.9.11

@@ -1,63 +1,50 @@
 import 'package:equatable/equatable.dart';
+import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
-import 'package:user_repository/user_repository.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:socket_repository/socket_repository.dart';
 
 import 'observer.dart';
-import 'screens/home/home.dart';
-import 'screens/local_authentication/local_authentication.dart';
-import 'screens/create_user/create_user.dart';
+import 'screens/root.dart';
+import 'state_managment/blocs/settings/bloc.dart';
 import 'utils/utils.dart';
 
 void main() async {
-  Bloc.observer = MyBlocObserver();
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = Observer();
   EquatableConfig.stringify = true;
-  runApp(
-    ChatApp(),
-  );
+  HydratedCubit.storage = await HydratedStorage.build();
+  runApp(MyApp());
 }
 
-class RootPage extends StatelessWidget {
-  static const route = '/';
-
+/// This contains all the data that the app has, the entry point of the app.
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: onSuccess,
-        ),
-        BlocListener<CreateUserBloc, CreateUserState>(
-          listener: onSuccess,
-        ),
-      ],
-      child: BlocBuilder<UserCubit, User>(builder: (context, state) {
-        if (state == null) return CreateUserPage();
-        return AuthenticationPage();
-      }),
-    );
-  }
-
-  void onSuccess(BuildContext context, dynamic state) {
-    if (state.status == FormzStatus.submissionSuccess) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        HomePage.route,
-        (route) => false,
-      );
-    }
-  }
-}
-
-class ChatApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Chat',
-      theme: ChatTheme.theme,
-      home: RootPage(),
-      initialRoute: RootPage.route,
-      onGenerateRoute: ChatRouter.onGenerateRoute,
+    return BlocProvider(
+      create: (_) => SettingsBloc(),
+      child: Builder(
+        builder: (context) {
+          return RepositoryProvider(
+            create: (_) {
+              final bloc = context.read<SettingsBloc>();
+              final userID = '${SettingsKeys.userID}';
+              final id = bloc.state.settings[userID];
+              final log = Logger();
+              log.i('The app initialized, id is $id');
+              return SocketRepository(whoami: id);
+            },
+            child: MaterialApp(
+              title: 'ChatApp',
+              theme: theme,
+              home: Home(),
+              initialRoute: Home.route,
+              onGenerateRoute: onGenerateRoute,
+            ),
+          );
+        },
+      ),
     );
   }
 }

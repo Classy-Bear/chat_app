@@ -1,61 +1,86 @@
-import 'package:flutter/material.dart';
+part of './utils.dart';
 
-import '../main.dart';
-import '../screens/chat/view/view.dart';
-import '../screens/create_user/create_user.dart';
-import '../screens/home/home.dart';
-import '../screens/local_authentication/local_authentication.dart';
+/// The [ChatPage] arguments when calling [Navigator.pushNamed].
+class ChatPageArguments {
+  final ChatsBloc chatsBloc;
+  final User receiver;
+  const ChatPageArguments({
+    @required this.chatsBloc,
+    @required this.receiver,
+  })  : assert(chatsBloc != null),
+        assert(receiver != null);
+}
 
-class ChatRouter {
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    // Getting arguments passed in while calling Navigator.pushNamed
-    final args = settings.arguments;
+/// The [HomePage] arguments when calling [Navigator.pushNamed].
+class HomePageArguments {
+  final SocketRepository repository;
+  const HomePageArguments({
+    @required this.repository,
+  }) : assert(repository != null);
+}
 
-    switch (settings.name) {
-      case RootPage.route:
-        return MaterialPageRoute(
-          builder: (_) => ChatApp(),
-        );
-      case AuthenticationPage.route:
-        return MaterialPageRoute(
-          builder: (_) => AuthenticationPage(),
-        );
-      case CreateUserPage.route:
-        return MaterialPageRoute(
-          builder: (_) => CreateUserPage(),
-        );
-      case HomePage.route:
-        return MaterialPageRoute(
-          builder: (_) => HomePage(),
-        );
-      case ChatPage.route:
-        return MaterialPageRoute(
-          builder: (_) => ChatPage(),
-        );
-      //case AuthenticationPage.route:
-        //if (args is String) {
-        //return MaterialPageRoute(
-        //builder: (_) => SecondPage(
-        //data: args,
-        //),
-        //);
-        //}
-        //return _errorRoute();
-      default:
-        return _errorRoute();
-    }
-  }
+/// The [ChatPage] arguments when calling [Navigator.pushNamed].
+class CreateUserPageArguments {
+  final SocketRepository repository;
+  final SettingsBloc settingsBloc;
+  const CreateUserPageArguments({
+    @required this.repository,
+    @required this.settingsBloc,
+  })  : assert(repository != null),
+        assert(settingsBloc != null);
+}
 
-  static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(builder: (_) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Error'),
-        ),
-        body: Center(
-          child: Text('ERROR'),
+/// Handles the [Route]s that were pushed using [Navigator.pushNamed].
+///
+/// Use this route generator in [MaterialApp.onGenerateRoute].
+Route<dynamic> onGenerateRoute(RouteSettings settings) {
+  switch (settings.name) {
+    case Home.route:
+      return MaterialPageRoute(
+        builder: (_) => MyApp(),
+      );
+    case AuthenticationPage.route:
+      return MaterialPageRoute(
+        builder: (_) => AuthenticationPage(),
+      );
+    case CreateUserPage.route:
+      final CreateUserPageArguments arguments = settings.arguments;
+      return MaterialPageRoute(
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => UserBloc(
+                repository: arguments.repository,
+                settings: arguments.settingsBloc,
+              ),
+            ),
+          ],
+          child: CreateUserPage(),
         ),
       );
-    });
+    case HomePage.route:
+      final HomePageArguments homePageArguments = settings.arguments;
+      return MaterialPageRoute(
+        builder: (_) => MultiBlocProvider(providers: [
+          BlocProvider(
+            create: (_) => HomePageBloc(
+              repository: homePageArguments.repository,
+            ),
+          ),
+          BlocProvider(
+            create: (_) => TabCubit(),
+          ),
+        ], child: HomePage()),
+      );
+    case ChatPage.route:
+      final ChatPageArguments chatPageArguments = settings.arguments;
+      return MaterialPageRoute(
+        builder: (_) => ChatPage(
+          chatsBloc: chatPageArguments.chatsBloc,
+          receiver: chatPageArguments.receiver,
+        ),
+      );
+    default:
+      return null;
   }
 }
